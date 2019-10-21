@@ -1,0 +1,23 @@
+{% extends '@App/layout.html.twig' %}
+
+{% block title %}
+    Unknown error
+{% endblock %}
+
+{% block body %}
+    <main class="bg-light d-flex flex-column justify-content-center align-items-center h-100">
+        <div class="form-block page-not-found-text">
+            <div class="container">
+                <div class="row">
+                    <div class="error-template d-flex flex-column align-items-center">
+                        <h2>Unknown error</h2>
+
+                        <a href="{{ path('home') }}" class="btn btn-secondary btn-lg active" role="button" aria-pressed="true">
+                            Main page
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
