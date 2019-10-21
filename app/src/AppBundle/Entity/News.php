@@ -50,6 +50,18 @@ class News
     private $active = true;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created", type="datetime")
+     */
+    private $created;
+
+    public function _construct()
+    {
+        $this->created = new \DateTime();
+    }
+
+    /**
      * Get id
      *
      * @return int
@@ -153,6 +165,30 @@ class News
     public function getActive()
     {
         return $this->active;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     *
+     * @return Date
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 }
 
