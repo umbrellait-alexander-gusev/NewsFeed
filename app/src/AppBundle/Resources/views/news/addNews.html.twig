@@ -4,6 +4,14 @@
     Adding New News
 {% endblock %}
 
+{% block stylesheets %}
+    <style>
+        form {
+            max-width: 600px !important;
+        }
+    </style>
+{% endblock %}
+
 {% block body %}
     <main class="h-100 bg-light d-flex flex-column justify-content-start align-items-center">
         <div class="wrapper w-100 bg-white p-5 border-bottom border-dark d-flex flex-column justify-content-end">
@@ -12,10 +20,32 @@
             </h1>
         </div>
 
-        <div class="wrapper mt-5 news-list bg-secondary">
+        <div class="wrapper w-100 h-auto py-5 news-list bg-secondary">
             <div class="container">
                 <div class="row d-flex flex-wrap justify-content-center align-items-center p-4 text-white">
+                    <form class="w-100">
+                        <div class="form-group">
+                            <label for="titleNews">Title news</label>
+                            <input type="text" class="form-control" id="titleNews" placeholder="Title news" required>
+                        </div>
 
+                        <div class="form-group">
+                            <label for="categoryNews">Category</label>
+                            <input type="text" class="form-control" id="categoryNews" placeholder="Category">
+                            <small class="form-text text-muted">This field is optional.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="contentNews">Content</label>
+                            <textarea class="form-control"  rows="8" id="contentNews" placeholder="Content news" required></textarea>
+                        </div>
+
+                        <div class="form-group form-check">
+                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                            <label class="form-check-label" for="exampleCheck1">Activate news when adding</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
