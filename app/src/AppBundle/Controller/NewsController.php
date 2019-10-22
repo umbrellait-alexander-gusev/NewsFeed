@@ -2,9 +2,13 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Form\NewsType;
+use ArrayObject;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 class NewsController extends Controller
@@ -50,7 +54,44 @@ class NewsController extends Controller
      * @Route("/add_news", name="add_news")
      * @Template()
      */
-    public function addNewsAction()
+    public function addNewsAction(Request $request)
     {
+        $categories = $this
+                ->getDoctrine()
+                ->getRepository('AppBundle:Category')
+                ->findAll();
+
+        $categoryChoices = new ArrayObject();
+        foreach ($categories as $category) {
+            $categoryChoices->offsetSet($category->getName(), $category->getId());
+        }
+        $categoryChoices->offsetSet('No category', 'null');
+        $categoryList = ['choices' => $categoryChoices];
+
+        $form = $this->createForm(NewsType::class);
+        $form->add('category', ChoiceType::class, $categoryList);
+        $form->add('submit', SubmitType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $news = $form->getData();
+
+            foreach ($categories as $category) {
+                if ($news->getCategory() === $category->getId()) {
+                    $news->setCategory($category);
+                }
+            }
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($news);
+            $em->flush();
+
+            $this->addFlash('success', 'Saved new news');
+            return $this->redirectToRoute('add_news');
+        }
+
+        return $this->render('@App/news/addNews.html.twig', [
+                'news_form' => $form->createView()
+        ]);
     }
 }

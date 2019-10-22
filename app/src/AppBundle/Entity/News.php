@@ -56,7 +56,7 @@ class News
      */
     private $created;
 
-    public function _construct()
+    public function __construct()
     {
         $this->created = new \DateTime();
     }
