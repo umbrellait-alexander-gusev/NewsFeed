@@ -7,7 +7,7 @@ services:
         env_file:
           - .env
         volumes:
-          - "../volumes/mysql/dev:/var/lib/mysql"
+          - "db:/var/lib/mysql"
         networks:
           crv_dev_network:
             aliases:
@@ -17,8 +17,6 @@ services:
         ports:
           - "81:80"
         restart: always
-        volumes:
-          - "../volumes/nginx/logs:/var/log/nginx/"
         volumes_from:
             - php
         networks:
@@ -31,9 +29,6 @@ services:
         env_file:
           - .env
         volumes:
-          - "../volumes/php/app/cache:/var/www/dev/app/cache/:rw"
-          - "../volumes/php/app/logs:/var/www/dev/app/logs/:rw"
-          - "../volumes/.composer:/var/www/.composer"
           - "../app:/var/www/dev"
         networks:
           crv_dev_network:
@@ -42,3 +37,6 @@ services:
 networks:
   crv_dev_network:
     driver: bridge
+
+volumes:
+  db:

@@ -75,7 +75,7 @@ status:
 # Compatibility with CLI autocomplete
 c-node:
 c-%:
-	$(EXEC) $* bash
+	$(EXEC) -u root $* bash
 
 # Use SHIFT + G, G, CMD + SHIFT + G, CMD + G to jump to start/end of logs
 # Compatibility with CLI autocomplete
