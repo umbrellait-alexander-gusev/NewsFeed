@@ -67,7 +67,7 @@ class NewsController extends Controller
         }
         $categoryChoices->offsetSet('No category', 'null');
         $categoryList = ['choices' => $categoryChoices];
-
+        
         $form = $this->createForm(NewsType::class);
         $form->add('category', ChoiceType::class, $categoryList);
         $form->add('submit', SubmitType::class);
@@ -75,10 +75,11 @@ class NewsController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $news = $form->getData();
-
             foreach ($categories as $category) {
                 if ($news->getCategory() === $category->getId()) {
                     $news->setCategory($category);
+                } else {
+                    $news->setCategory(null);
                 }
             }
 
